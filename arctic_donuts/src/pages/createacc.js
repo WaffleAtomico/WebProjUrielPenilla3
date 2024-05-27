@@ -34,7 +34,7 @@ export default function Createacc() {
                 && formData.user_password !== ''
                 && formData.user_creditcard !== '') {
                     try{
-                        await axios.post("http://localhost:8800/users", formData);
+                        await axios.post("http://localhost:8800/user", formData);
                         // console.log("envie la solicitud correctamente")
                         alert("Usuario Creado!!!");
                         navigate("/");
