@@ -1,0 +1,32 @@
+.ticket-frame{
+    background-color: rgba(39, 236, 203, 0.5);
+    width: 55rem;
+    /* background-color: aqua; */
+    flex: none;
+    position: fixed; /* Posiciona el elemento en relación con la ventana del navegador */
+    top: 50%; /* Centra el elemento verticalmente */
+    left: 50%; /* Centra el elemento horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta la posición exacta del elemento */
+    z-index: 1000; /* Asegura que el elemento esté por encima de otros elementos */
+    border-radius: 10px;
+    text-align: right;
+
+}
+
+.ticket-list{
+    padding-top: 5px;
+    background-color:rgba(153, 94, 230, 0.7);;
+    text-align: left;
+
+}
+
+.ticket-listofProducts{
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-product{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
