@@ -121,6 +121,7 @@ app.delete("/user", (req, res) => {
 });
 
 
+
 app.post("/user-login-client", (req, res) => {
     const { user_mail, user_password } = req.body;
     const q = "SELECT * FROM user WHERE user_mail = ? AND user_password = ? AND user_type = 0";
@@ -147,6 +148,18 @@ app.post("/user-login-admin", (req,res) => {
     });
 });
 
+
+//SELECT gente
+app.get("/user-gente", (req,res) => {
+    const q = "SELECT * FROM user WHERE user_type = 0"
+    db.query(q,(err,data) =>
+        {
+            if(err) return res.json(err)
+            return res.json(data)
+        })
+});
+
+
 //
 app.post("/check-mail", (req,res) => {
     const { email } = req.body;
@@ -163,9 +176,11 @@ app.post("/check-mail", (req,res) => {
 
 
 app.get("/admin-users", (req,res) => {
-    const { email } = req.body;
-    const q = "SELECT * FROM user WHERE user_type = 1 AND user_mail NOT IN (?)";
-    db.query(q, [email], (err, data) => {
+    const { user_mail } = req.body;
+    console.log("mail " + user_mail);
+    console.log("Body " + req.body);
+    const q = "SELECT * FROM user WHERE user_type = 1 AND user_mail != ?";
+    db.query(q, [user_mail], (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
     });

@@ -26,7 +26,7 @@ export default function Login() {
                 navigate(`/cart/${user_mail}`);
             }else if (responseadmin.data.exists) {
                 alert("El usuario admin si existe");
-                navigate(`/cart/${user_mail}`);
+                navigate(`/admin_employees/${user_mail}`);
             }
              else {
                 alert("Usuario no existe o contraseña incorrecta");

@@ -12,7 +12,7 @@ const Users = () => {
         useEffect(() => {
             const FetchAllUsers = async () => {
                 try {
-                    const res = await axios.get("http://localhost:8800/users");
+                    const res = await axios.get("http://localhost:3001/users");
                     console.log(res);
                     setFormData(res.data)
                 } catch (err) {

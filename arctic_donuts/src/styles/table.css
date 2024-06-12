@@ -1,0 +1,17 @@
+table {
+    border-collapse: collapse;
+    width: 800px;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+th,
+td {
+    border: 3px solid black;
+    height: 40px;
+}
+
+h1 {
+    text-align: center;
+}

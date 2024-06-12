@@ -19,6 +19,7 @@ import Adduser from './API/addusr';
 import Updateuser from './API/updateusr';
 import Users from './API/users';
   
+import Admin_employees from './pages/adminEmployees';
 
 const router = createBrowserRouter([
   { //login
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
   {
     path: '/terms_conditions',
     element: <Terms_conditions />
+  },
+  {
+    path: '/admin_employees/:email',
+    element: <Admin_employees />
   }
 
 ]);

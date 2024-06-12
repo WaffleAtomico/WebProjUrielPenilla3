@@ -13,7 +13,8 @@ export default function Createacc() {
         user_lastname: '',
         user_mail: '',
         user_password: '',
-        user_creditcard: ''
+        user_creditcard: '',
+        user_type: 0
     });
 
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ export default function Createacc() {
                 && formData.user_password !== ''
                 && formData.user_creditcard !== '') {
                     try{
-                        await axios.post("http://localhost:8800/user", formData);
+                        await axios.post("http://localhost:3001/user", formData);
                         // console.log("envie la solicitud correctamente")
                         alert("Usuario Creado!!!");
                         navigate("/");
