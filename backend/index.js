@@ -111,7 +111,7 @@ app.put("/user", (req, res) => {
 }
 */
 
-app.delete("/user", (req, res) => {
+app.post("/user", (req, res) => {
     const q = "DELETE FROM user WHERE user_mail = ?"
     const values = [req.body.user_mail]
     db.query(q, [values], (err, data) => {
@@ -186,15 +186,43 @@ app.post("/admin-users", (req,res) => {
     });
 });
 
+
+// utl esta mal creo, ya que no recibe el correo por la url
+// LLamada erronea ya que solo acepta post
+
 app.delete("/delete-admin/user_mail:", (req, res) => {
     const user_mail = req.params.user_mail;
     const q = " DELETE FROM user WHERE user_mail = ? ";
-  
+    
     db.query(q, [user_mail], (err, data) => {
       if (err) return res.send(err);
       return res.json(data);
     });
   });
+
+
+  /* PRODUCTS */
+
+
+app.post("/allproducts", (req,res) => {
+    const q = "SELECT * FROM shop_product"
+    db.query(q,(err,data) =>
+        {
+            if(err) return res.json(err)
+            return res.json(data)
+        })
+});
+
+app.post("/updateamount", (req,res) => {
+    const q = "SELECT * FROM shop_product"
+    const product_amount = req.params.product_amount;
+    db.query(q,[product_amount],(err,data) =>
+        {
+            if(err) return res.json(err)
+            return res.json(data)
+        })
+});
+
 
 app.listen(3001, () =>
 {

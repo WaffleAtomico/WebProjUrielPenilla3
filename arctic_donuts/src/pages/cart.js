@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Foot, Head } from "../components/headfoot";
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 import { HiOutlineLogin } from "react-icons/hi";
 
@@ -19,18 +20,16 @@ export default function Cart() {
 
     const [clickCounts, setClickCounts] = useState({1: 0, 2: 0, 3: 0});
     const [totalValues, setTotalValues] = useState({1: 0, 2: 0, 3: 0});
-    
 
     const poductsName = {1:'Dona DIWK', 2:'Dona Arabella', 3:'Dona SIAS'};
-
-    // Do i wanna know
-    // Arabella
-    // Suck it and see
     const productsPrice = {1: 29, 2: 29, 3: 24};
     const productsImage = {1: 1, 2: 2, 3: 3};
 
     const [visible, setVisibilty] = useState(false);
     const totalPrice = Object.values(totalValues).reduce((a, b) => a + b, 0);
+
+
+    const [products, setProducts] = useState([]);
 
     const handleProductIncrease = (productId, price) => {
         const newCount = clickCounts[productId] + 1;
@@ -64,6 +63,19 @@ export default function Cart() {
         // PtoBD 
         setVisibilty(visible => !visible);
     }
+
+// Se pueden jalar donas de: https://www.panarte.mx/productos/donas 
+
+    useEffect(() => {
+        axios.post('http://localhost:3001/allproducts')
+            .then(response => {
+                setProducts(response.data);
+                console.log(products);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    },[]);
 
     return (
         <>
@@ -113,6 +125,16 @@ export default function Cart() {
             </Link>       
 
             <div className="grid-container">
+
+            {products.map(product => (
+                <div key={product.id}>
+                    <h2>{product.name}</h2>
+                    <p>{product.amount}</p>
+                    <p>{product.cost}</p>
+                    <p><img src={product.product_img_url} alt="Imagen" /></p>
+                </div>
+            ))}
+
                 <Product 
                     img= {productsImage[1]}
                     title= {poductsName[1]}

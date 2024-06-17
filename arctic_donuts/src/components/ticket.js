@@ -8,6 +8,13 @@ import { MdCancelPresentation } from "react-icons/md";
 import '../styles/ticket.css';
 import Product_list from './product_list';
 
+/*
+Tutorial visto
+
+https://episyche.com/blog/how-to-integrate-paypal-with-react-application
+
+
+*/
 
 export default function TicketView(props)
 {
