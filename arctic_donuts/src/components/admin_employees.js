@@ -26,10 +26,8 @@ const Users = () => {
         const fetchAllUsers = async () => {
             try {
                 console.log(email);
-                const mail = email;
-                const res = await axios.get("http://localhost:3001/admin-users", { mail } );// { params: { user_mail: mail } });
-                console.log(email);
-                console.log("respuesta " + res.data);
+                const res = await axios.post("http://localhost:3001/admin-users", { user_mail: email });
+                console.log("respuesta ", res.data);
                 setusers(res.data);
             } catch (err) {
                 console.log(err);
@@ -47,10 +45,17 @@ const Users = () => {
     }
     console.log(users);
 
+    const handleDelete = async (id) => {
+        try {
+          await axios.delete(`http://localhost:3001/delete-admin/${id}`);
+          window.location.reload()
+        } catch (err) {
+          console.log(err);
+        }
+      };
 
     return (
         <div>
-
             <br />
             <table>
 
@@ -65,29 +70,21 @@ const Users = () => {
                     </tr>
                 </thead>
 
-                
-                {users.map((user) => (
-                    <tbody align="center">
-                        <td>{user.user_mail}</td>
-                        <td>{user.user_name}</td>
-                        <td>{user.user_lastname}</td>
-                        <td>{user.user_password}</td>
-                        <td>{verificarTipo(user.user_type)}</td>
-
-                        <td>
-                            <button className="delete">
-                                <Link
-                                    to={`/update/${user.id}`}
-                                    style={{ color: "inherit", textDecoration: "none" }}
-                                >
-                                    Delete
-                                </Link>
-                            </button>
-                        </td>
-
-                    </tbody>
-                ))
-                }
+                <tbody align="center">
+                    {users.map((user) => (
+                        <div key={user.id} className="user">
+                            <td>{user.user_mail}</td>
+                            <td>{user.user_name}</td>
+                            <td>{user.user_lastname}</td>
+                            <td>{user.user_password}</td>
+                            <td>{verificarTipo(user.user_type)}</td>
+                            <td>
+                            <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
+                            </td>
+                        </div>
+                    ))
+                    }
+                </tbody>
 
             </table>
             <br />

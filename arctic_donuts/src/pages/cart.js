@@ -10,7 +10,7 @@ import Product from "../components/product";
 
 
 import '../styles/product.css';
-import Ticket from '../components/ticket';
+import TicketView from '../components/ticket';
 
 export default function Cart() {
 
@@ -78,7 +78,7 @@ export default function Cart() {
             }} />}
             <Head />
             <div style={{visibility: visible ?  'visible' : 'hidden'}}>
-                <Ticket 
+                <TicketView 
                     user = {email}
                     products = {[
                         {
@@ -142,9 +142,9 @@ export default function Cart() {
                     total= {totalValues[3]}
                 />               
             </div>    
-            <div className="cart-price" style={{visibility: totalPrice > 0 ? 'visible' : 'hidden'}} >
-                <h1>Precio a pagar: ${totalPrice}
-                    <Button variant="info" size='lg' onClick={handleTicket}>Pagar</Button >
+            <div className="cart-price" style={{visibility: totalPrice > 0 ? 'visible' : 'hidden'}} onClick={handleTicket} >
+                <h1>Confirmar pedido: ${totalPrice}
+                    {/* <Button variant="info" size='lg' >Pagar</Button > */}
                 </h1>
             </div>
             <Foot />

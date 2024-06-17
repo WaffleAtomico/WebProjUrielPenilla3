@@ -175,7 +175,7 @@ app.post("/check-mail", (req,res) => {
 });
 
 
-app.get("/admin-users", (req,res) => {
+app.post("/admin-users", (req,res) => {
     const { user_mail } = req.body;
     console.log("mail " + user_mail);
     console.log("Body " + req.body);
@@ -186,9 +186,17 @@ app.get("/admin-users", (req,res) => {
     });
 });
 
+app.delete("/delete-admin/user_mail:", (req, res) => {
+    const user_mail = req.params.user_mail;
+    const q = " DELETE FROM user WHERE user_mail = ? ";
+  
+    db.query(q, [user_mail], (err, data) => {
+      if (err) return res.send(err);
+      return res.json(data);
+    });
+  });
 
 app.listen(3001, () =>
 {
     console.log("Connected to backend!")
-    
 });

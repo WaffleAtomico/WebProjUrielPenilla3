@@ -14,7 +14,7 @@ function Foot()
         </div>
     );
 }
-
+// npm i @paypal/react-paypal-js
 function Head_Navbar()
 {
     return(

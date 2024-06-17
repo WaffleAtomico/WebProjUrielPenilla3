@@ -9,7 +9,7 @@ export default function Product_list_product(props) {
                 {props.name}
             </Col>           
             <div style={{fontSize: '29px'}}>
-                Compraste: {props.cantidad}
+                Cantidad: {props.cantidad}
             </div>
             <div style={{fontSize: '30px'}}>
                 ${props.costo}
