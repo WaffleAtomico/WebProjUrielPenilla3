@@ -100,6 +100,7 @@ export default function Cart() {
                             price: productsPrice[3]
                         }
                     ]}
+                visible={visible}
                 totalValue= {totalPrice}
                 onButtonClick={handleTicket}
                 />

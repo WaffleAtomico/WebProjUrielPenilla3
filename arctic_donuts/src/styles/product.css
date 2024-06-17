@@ -25,7 +25,8 @@
     border-radius: 50px 50px 0 0;
     text-align: center;
     padding-bottom: 1rem;
-    color: white;                
+    color: white;
+    cursor: pointer;               
   }
   
   .product-actions

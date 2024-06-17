@@ -1,6 +1,6 @@
 .ticket-frame{
     background-color: rgba(39, 236, 203, 0.5);
-    width: 55rem;
+    width: 46rem;
     /* background-color: aqua; */
     flex: none;
     position: fixed; /* Posiciona el elemento en relación con la ventana del navegador */
@@ -15,6 +15,7 @@
 
 .ticket-list{
     padding-top: 5px;
+    /* margin-bottom: 1rem; */
     background-color:rgba(153, 94, 230, 0.7);;
     text-align: left;
 
@@ -29,4 +30,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 0.5rem;
 }

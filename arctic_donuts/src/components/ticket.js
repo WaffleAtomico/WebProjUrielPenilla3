@@ -1,5 +1,6 @@
-import { CLIENT_ID } from '../Config/Config';
+import { CLIENT_ID } from '../Config/config';
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 import React, { useState, useEffect } from "react";
 import Button from 'react-bootstrap/Button';
 import { MdCancelPresentation } from "react-icons/md";
@@ -10,6 +11,7 @@ import Product_list from './product_list';
 
 export default function TicketView(props)
 {
+    // const [show, setShow] = useState(true);
     const [success, setSuccess] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
     const [orderID, setOrderID] = useState(false);
@@ -21,7 +23,7 @@ export default function TicketView(props)
                 {
                     description: "Arctic_Donuts Purchase", 
                     amount: {
-                        currency_code: "MXN",
+                        currency_code: "USD",
                         value: props.totalValue, //
                     },
                 },
@@ -49,6 +51,7 @@ export default function TicketView(props)
         if (success) {
             alert("Payment successful!!");
             console.log('Order successful . Your order id is--', orderID);
+            props.onButtonClick(productsToBD);
         }
     },[success]);
 
@@ -63,7 +66,7 @@ export default function TicketView(props)
             <div className="ticket-frame">
                 <Button variant="danger" size="lg" 
                     style={{borderRadius: '70%'}} 
-                    onClick={props.onButtonClick}>
+                    onClick={props.onButtonClick} >
                         <MdCancelPresentation />
                 </Button>
                 <div className='ticket-list'>
@@ -72,14 +75,17 @@ export default function TicketView(props)
                     />
                 </div>
                 <div className="d-grid gap-2">
-                    <Button variant="success" size="lg" onClick={props.onButtonClick(productsToBD)}>
-                        Pagar ${props.totalValue}
-                        <PayPalButtons
-                        style={{ layout: "vertical" }}
-                        createOrder={createOrder}
-                        onApprove={onApprove}
+                    <h2>Precio total a pagar: ${props.totalValue}</h2>
+                    {/* <Button variant="success" size="lg" onClick={props.onButtonClick(productsToBD)}>
+                                              
+                    </Button> */}
+                    {props.visible ? (
+                        <PayPalButtons 
+                            style={{ layout: "vertical" }}
+                            createOrder={createOrder}
+                            onApprove={onApprove}
                         />
-                    </Button>
+                    ) : null}
                 </div>
             </div>
         </PayPalScriptProvider>
