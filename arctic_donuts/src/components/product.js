@@ -29,7 +29,7 @@ export default function Product(props){
             <div className="productContainerStyles">
                 <Card style={{ width: '18rem' }}>
                     {/* Cambiar por href */}
-                <Card.Img variant="top" src={require(`../img/dona-${props.img}.png`)} style={{height: '180px'}} />
+                <Card.Img variant="top" src={props.img} style={{height: '180px'}} />
                 <Card.Body>
                     <Card.Title>{props.title}</Card.Title>
                     <Card.Text style={{fontSize: '30px'}}>

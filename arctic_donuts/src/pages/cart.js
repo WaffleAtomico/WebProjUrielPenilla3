@@ -18,12 +18,14 @@ export default function Cart() {
     // const navigate  = useNavigate();
     const { email } = useParams();
 
-    const [clickCounts, setClickCounts] = useState({1: 0, 2: 0, 3: 0});
-    const [totalValues, setTotalValues] = useState({1: 0, 2: 0, 3: 0});
+    // const [clickCounts, setClickCounts] = useState({1: 0, 2: 0, 3: 0});
+    // const [totalValues, setTotalValues] = useState({1: 0, 2: 0, 3: 0});
+    const [clickCounts, setClickCounts] = useState({});
+    const [totalValues, setTotalValues] = useState({});
 
-    const poductsName = {1:'Dona DIWK', 2:'Dona Arabella', 3:'Dona SIAS'};
-    const productsPrice = {1: 29, 2: 29, 3: 24};
-    const productsImage = {1: 1, 2: 2, 3: 3};
+    const poductsName = { 1: 'Dona DIWK', 2: 'Dona Arabella', 3: 'Dona SIAS' };
+    const productsPrice = { 1: 29, 2: 29, 3: 24 };
+    const productsImage = { 1: 1, 2: 2, 3: 3 };
 
     const [visible, setVisibilty] = useState(false);
     const totalPrice = Object.values(totalValues).reduce((a, b) => a + b, 0);
@@ -57,29 +59,42 @@ export default function Cart() {
         }
     }
 
-    const handleTicket = (PtoBD) =>
-    {
+    const handleTicket = (PtoBD) => {
         // email
         // PtoBD 
         setVisibilty(visible => !visible);
     }
 
-// Se pueden jalar donas de: https://www.panarte.mx/productos/donas 
+    // Se pueden jalar donas de: https://www.panarte.mx/productos/donas 
 
     useEffect(() => {
-        axios.post('http://localhost:3001/allproducts')
+        axios.post('http://localhost:3001/aviable-products')
             .then(response => {
-                setProducts(response.data);
-                console.log(products);
+                const products = response.data;
+                setProducts(products); // Asigna los datos al estado de productos aquí
+    
+                const clickCounts = {};
+                const totalValues = {};
+    
+                products.forEach((product) => {
+                    clickCounts[product.id_product] = 0;
+                    totalValues[product.id_product] = 0;
+                });
+    
+                setClickCounts(clickCounts);
+                setTotalValues(totalValues);
+                console.log(products); // Ahora puedes ver los productos aquí
+                console.log(clickCounts);
+                console.log(totalValues);
             })
             .catch(error => {
                 console.error(error);
             });
-    },[]);
+    }, []);
 
     return (
         <>
-                {visible && <div style={{
+            {visible && <div style={{
                 position: 'fixed',
                 top: 0,
                 left: 0,
@@ -89,32 +104,33 @@ export default function Cart() {
                 zIndex: 999
             }} />}
             <Head />
-            <div style={{visibility: visible ?  'visible' : 'hidden'}}>
-                <TicketView 
-                    user = {email}
-                    products = {[
-                        {
-                            image: productsImage[1],
-                            name: poductsName[1],
-                            amount: clickCounts[1],
-                            price: productsPrice[1]
-                        },
-                        {
-                            image: productsImage[2],
-                            name: poductsName[2],
-                            amount: clickCounts[2],
-                            price: productsPrice[2]
-                        },
-                        {
-                            image: productsImage[3],
-                            name: poductsName[3],
-                            amount: clickCounts[3],
-                            price: productsPrice[3]
-                        }
-                    ]}
-                visible={visible}
-                totalValue= {totalPrice}
-                onButtonClick={handleTicket}
+            <div style={{ visibility: visible ? 'visible' : 'hidden' }}>
+                <TicketView
+                    user={email}
+                    products={products}
+                    // products = {[
+                    //     {
+                    //         image: productsImage[1],
+                    //         name: poductsName[1],
+                    //         amount: clickCounts[1],
+                    //         price: productsPrice[1]
+                    //     },
+                    //     {
+                    //         image: productsImage[2],
+                    //         name: poductsName[2],
+                    //         amount: clickCounts[2],
+                    //         price: productsPrice[2]
+                    //     },
+                    //     {
+                    //         image: productsImage[3],
+                    //         name: poductsName[3],
+                    //         amount: clickCounts[3],
+                    //         price: productsPrice[3]
+                    //     }
+                    // ]}
+                    visible={visible}
+                    totalValue={totalPrice}
+                    onButtonClick={handleTicket}
                 />
             </div>
 
@@ -122,50 +138,26 @@ export default function Cart() {
                 <Button variant="primary" size="lg" className="inic">
                     <HiOutlineLogin />
                 </Button>
-            </Link>       
+            </Link>
 
             <div className="grid-container">
 
-            {products.map(product => (
-                <div key={product.id}>
-                    <h2>{product.name}</h2>
-                    <p>{product.amount}</p>
-                    <p>{product.cost}</p>
-                    <p><img src={product.product_img_url} alt="Imagen" /></p>
-                </div>
-            ))}
+                {products.map((product) => (
+                    <div key={product.id_product}>
+                        <Product
+                            img={product.product_img_url}
+                            title={product.product_cost}
+                            desc={product.product_cost}
+                            cantidad={product.product_amount}
+                            onIncrease={() => handleProductIncrease(product.id_product, product.product_cost)}
+                            onDecrease={() => handleProductDecrease(product.id_product, product.product_cost)}
+                            total={totalValues[1]}
+                        />
+                    </div>
+                ))}
 
-                <Product 
-                    img= {productsImage[1]}
-                    title= {poductsName[1]}
-                    desc= {productsPrice[1]}
-                    cantidad= {40}
-                    onIncrease={() => handleProductIncrease(1, productsPrice[1])}
-                    onDecrease={() => handleProductDecrease(1, productsPrice[1])}
-                    total= {totalValues[1]}
-                />
-                
-                <Product 
-                    img= {productsImage[2]}
-                    title= {poductsName[2]}
-                    desc= {productsPrice[2]}
-                    cantidad= {40}
-                    onIncrease={() => handleProductIncrease(2, productsPrice[2])}
-                    onDecrease={() => handleProductDecrease(2, productsPrice[2])}
-                    total= {totalValues[2]}
-                />  
-                
-                <Product 
-                    img= {productsImage[3]}
-                    title= {poductsName[3]}
-                    desc= {productsPrice[3]}
-                    cantidad= {40}
-                    onIncrease={() => handleProductIncrease(3, productsPrice[3])}
-                    onDecrease={() => handleProductDecrease(3, productsPrice[3])}
-                    total= {totalValues[3]}
-                />               
-            </div>    
-            <div className="cart-price" style={{visibility: totalPrice > 0 ? 'visible' : 'hidden'}} onClick={handleTicket} >
+            </div>
+            <div className="cart-price" style={{ visibility: totalPrice > 0 ? 'visible' : 'hidden' }} onClick={handleTicket} >
                 <h1>Confirmar pedido: ${totalPrice}
                     {/* <Button variant="info" size='lg' >Pagar</Button > */}
                 </h1>
@@ -174,7 +166,3 @@ export default function Cart() {
         </>
     );
 }
-
-
-
- 

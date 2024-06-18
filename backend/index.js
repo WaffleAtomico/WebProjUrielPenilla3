@@ -174,11 +174,10 @@ app.post("/check-mail", (req,res) => {
     });
 });
 
+/* ADM */
 
 app.post("/admin-users", (req,res) => {
     const { user_mail } = req.body;
-    console.log("mail " + user_mail);
-    console.log("Body " + req.body);
     const q = "SELECT * FROM user WHERE user_type = 1 AND user_mail != ?";
     db.query(q, [user_mail], (err, data) => {
         if (err) return res.json(err);
@@ -190,10 +189,10 @@ app.post("/admin-users", (req,res) => {
 // utl esta mal creo, ya que no recibe el correo por la url
 // LLamada erronea ya que solo acepta post
 
-app.delete("/delete-admin/user_mail:", (req, res) => {
-    const user_mail = req.params.user_mail;
+app.post("/delete-admin", (req, res) => {
+    const { user_mail } = req.body;
     const q = " DELETE FROM user WHERE user_mail = ? ";
-    
+    console.log("mail " + user_mail);
     db.query(q, [user_mail], (err, data) => {
       if (err) return res.send(err);
       return res.json(data);
@@ -204,8 +203,34 @@ app.delete("/delete-admin/user_mail:", (req, res) => {
   /* PRODUCTS */
 
 
-app.post("/allproducts", (req,res) => {
+app.get("/allproducts", (req,res) => {
     const q = "SELECT * FROM shop_product"
+    db.query(q,(err,data) =>
+        {
+            if(err) return res.json(err)
+            return res.json(data)
+        })
+});
+
+app.post("/product", (req,res) => {
+    const q = "INSERT INTO shop_product (`id_product`, `product_name`, `product_cost`, `product_amount`, `product_img_url`) VALUE (?)"
+    const values = [
+        req.body.id_product,
+        req.body.product_name,
+        req.body.product_cost,
+        req.body.product_amount,
+        req.body.product_img_url,
+                ]
+    db.query(q,[values], (err,data) =>
+        {
+            if(err) return res.json(err)
+            // return res.json(data)
+            return res.json("Product has been Added!!!")
+        })
+});
+
+app.post("/aviable-products", (req,res) => {
+    const q = "SELECT * FROM shop_product WHERE product_amount > 0"
     db.query(q,(err,data) =>
         {
             if(err) return res.json(err)
@@ -222,6 +247,17 @@ app.post("/updateamount", (req,res) => {
             return res.json(data)
         })
 });
+
+
+app.post("/delete-product", (req, res) => {
+    const { id_product } = req.body;
+    const q = "DELETE FROM shop_product WHERE id_product = ? ";
+    console.log("id " + id_product);
+    db.query(q, [id_product], (err, data) => {
+        if(err) return res.json(err)
+        return res.json("Product has been deleted!")
+    });
+  });
 
 
 app.listen(3001, () =>

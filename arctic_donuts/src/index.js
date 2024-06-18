@@ -20,6 +20,7 @@ import Updateuser from './API/updateusr';
 import Users from './API/users';
   
 import Admin_employees from './pages/adminEmployees';
+import Admin_storage from './pages/adminStorage';
 
 const router = createBrowserRouter([
   { //login
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: '/admin_employees/:email',
     element: <Admin_employees />
+  },
+  {
+    path: '/admin_storage/:email',
+    element: <Admin_storage />
   }
 
 ]);

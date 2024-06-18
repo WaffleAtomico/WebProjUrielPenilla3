@@ -13,7 +13,6 @@ Tutorial visto
 
 https://episyche.com/blog/how-to-integrate-paypal-with-react-application
 
-
 */
 
 export default function TicketView(props)
