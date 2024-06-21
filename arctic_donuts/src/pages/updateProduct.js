@@ -6,20 +6,6 @@ import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import { Foot, Head } from "../components/headfoot";
-import Button from 'react-bootstrap/Button';
-
-
-//const productsToBD = props.products.filter(product => product.amount > 0);
-
-/*
-const [formData, setFormData] = users({
-    user_name: '',
-    user_lastname: '',
-    user_mail: '',
-    user_password: '',
-    user_creditcard: ''
-});
-*/
 
 export default function UpdateProduct() {
 

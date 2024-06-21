@@ -1,39 +1,25 @@
 import '../styles/addEmployees.css'; //Importar el estilo correcto
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import React from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
 
-
-//const productsToBD = props.products.filter(product => product.amount > 0);
-
-/*
-const [formData, setFormData] = users({
-    user_name: '',
-    user_lastname: '',
-    user_mail: '',
-    user_password: '',
-    user_creditcard: ''
-});
-*/
-
 export default function UpdateProduct(props) {
 
-    const navigate = useNavigate();
-
-
-
-
     const [formData, setFormData] = useState({
-        product_name: props.product_name,
-        product_cost: props.product_cost,
-        product_amount: props.product_amount,
-        product_img_url: props.product_img_url,
+        product_name: props.product.product_name,
+        product_cost: props.product.product_cost,
+        product_amount: props.product.product_amount,
+        product_img_url: props.product.product_img_url,
     });
 
-
+    useEffect(() => {
+        console.log(props.product);
+        console.log(props.product.product_name);
+    }, []);
+    
     const handleChange = (event) => {
         setFormData({
             ...formData,
@@ -53,11 +39,11 @@ export default function UpdateProduct(props) {
             && formData.product_img_url !== '') {
 
                const infoToSend = {
-                    product_name: props.product_name,
-                    product_cost: props.product_cost,
-                    product_amount: props.product_amount,
-                    product_img_url: props.product_img_url,
-                    id_product: props.id_product,
+                    product_name: formData.product_name,
+                    product_cost: formData.product_cost,
+                    product_amount: formData.product_amount,
+                    product_img_url: formData.product_img_url,
+                    id_product: props.product.id_product,
                }
             
             try {
@@ -91,10 +77,10 @@ export default function UpdateProduct(props) {
                                     className="control"
                                     type="text"
                                     name="product_name"
-                                    placeholder="Nombre"
+                                    placeholder="Nombre" 
                                     style={{ marginTop: '5px' }}
                                     onChange={handleChange} required
-                                    value={props.product_name}
+                                    value={formData.product_name}
                                 />
                             </p>
                             <p>
@@ -104,7 +90,7 @@ export default function UpdateProduct(props) {
                                     name="product_cost"
                                     placeholder="Costo"
                                     onChange={handleChange} required
-                                    value={props.product_cost}
+                                    value={formData.product_cost}
                                 />
                             </p>
                             <p>
@@ -115,7 +101,7 @@ export default function UpdateProduct(props) {
                                     placeholder="Cantidad"
                                     style={{ marginTop: '5px' }}
                                     onChange={handleChange} required
-                                    value={props.product_amount}
+                                    value={formData.product_amount}
                                 />
                             </p>
                             <p>
@@ -125,7 +111,7 @@ export default function UpdateProduct(props) {
                                     name="product_img_url"
                                     placeholder="Imagen"
                                     onChange={handleChange} required
-                                    value={props.product_img_url}
+                                    value={formData.product_img_url}
                                 />
                             </p>
                             <p>

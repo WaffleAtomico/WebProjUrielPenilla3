@@ -17,8 +17,8 @@ export default function AdminStorage() {
     const [products, SetProducts] = useState([]);
     const [visible, setVisibilty] = useState(false);
     const [visible2, setVisibilty2] = useState(false);
-    const [productedit, SetProductedit] = useState();
-    const productE = null;
+    const [productedit, SetProductedit] = useState(null);
+    // const productE = null;
 
     const fetchAllProducts = async () => {
         try {
@@ -51,7 +51,7 @@ export default function AdminStorage() {
         console.log("Product que recibimos" + product);
         SetProductedit(product);
         console.log("Edit lo que enviamos " + productedit);
-        setVisibilty2(visible2 => !visible2);
+        setVisibilty2(visible2 => !visible2); 
     }
 
     // const handleFormCreate = () =>
@@ -90,7 +90,6 @@ export default function AdminStorage() {
                 <div style={{ visibility: visible2 ? 'visible' : 'hidden' }}>
                     <UpdateProduct
                         product={productedit}
-                        user_mail={email}
                         setVisibilty={setVisibilty2}
                         fetchAllProducts={fetchAllProducts}
                     />
@@ -132,12 +131,6 @@ export default function AdminStorage() {
                             <td>{product.product_cost}</td>
                             <td>{product.product_amount}</td>
                             <td>
-
-                                {/*<p>
-                                    <Link to={`../update_product/${product.id_product}`} style={{ color: "inherit", textDecoration: "none" }}>
-                                        <IoMdRefresh style={{ fontSize: '52px' }} />
-                                    </Link>
-                                </p>*/}
                                 <p  onClick={() => handleUpdate(product)} style={{ cursor: "pointer" }} >
                                     Actualizar
                                 </p>
