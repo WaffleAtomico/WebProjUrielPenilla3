@@ -12,6 +12,7 @@ import Product from "../components/product";
 
 import '../styles/product.css';
 import TicketView from '../components/ticket';
+import { getUserLocation } from '../helpers/getUserLocation.ts';
 
 export default function Cart() {
     const { email } = useParams();
@@ -85,6 +86,16 @@ export default function Cart() {
                 console.error(error);
             });
     }, []);
+    useEffect( ()=>{
+        getUserLocation();
+        // .then( lnglat => dispatch({type: 'setUserLocation', payload: lnglat}) );
+    })
+
+    if( !navigator.geolocation )
+    {
+        alert("Tu navegador no tiene opcion de geolocalización");
+        throw new Error("Tu navegador no tiene opcion de geolocalización");
+    }
 
     return (
         <>
