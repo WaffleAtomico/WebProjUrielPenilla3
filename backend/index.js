@@ -268,9 +268,13 @@ app.post("/update-products", (req,res) => {
 });
 
 app.post("/updateamount", (req,res) => {
-    const q = "SELECT * FROM shop_product"
-    const product_amount = req.params.product_amount;
-    db.query(q,[product_amount],(err,data) =>
+    const q = "UPDATE `shop_product` SET `product_amount`= ? WHERE id_product = ?"
+    const values = [
+        req.body.product_amount,
+        req.body.id_product
+    ]
+    // console.log(values);
+    db.query(q, values,(err,data) =>
         {
             if(err) return res.json(err)
             return res.json(data)

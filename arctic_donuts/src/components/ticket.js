@@ -7,6 +7,7 @@ import { MdCancelPresentation } from "react-icons/md";
 
 import '../styles/ticket.css';
 import Product_list from './product_list';
+import axios from 'axios';
 
 /*
 Tutorial visto
@@ -45,8 +46,27 @@ export default function TicketView(props)
         return actions.order.capture().then(function (details) {
             const { payer } = details;
             setSuccess(true);
+            console.log(productsToBD);
+            updateProductsData(productsToBD)
         });
     };
+
+    const updateProductsData = (productsToUpdate) =>
+    {
+        productsToUpdate.forEach(async product => {
+            const newAmount = (product.product_amount ) - (props.clickCounts[product.id_product]);
+            const dataupdate = 
+            {
+                product_amount: newAmount,
+                product_id: product.id_product
+            }
+            try {
+                await axios.post("http://localhost:3001/updateamount", dataupdate);
+            } catch (err) {
+                console.log(err);
+            }
+        });
+    }
 
     //capture likely error
     const onError = (data, actions) => {
@@ -65,7 +85,7 @@ export default function TicketView(props)
         console.log("Recibi esta informacion en el ticket "+props.products);
     },[]);
 
-    const productsToBD = props.products.filter(product => product.amount > 0);
+    const productsToBD = props.products.filter(product => props.clickCounts[product.id_product] > 0);
     
     // Para al dar click, ejecutar la query y guardar en la bd el pago del usuario de que productos 
     // junto con toda la informacion relacionada
