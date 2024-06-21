@@ -273,12 +273,12 @@ app.post("/updateamount", (req,res) => {
         req.body.product_amount,
         req.body.id_product
     ]
+    console.log(values);
     // console.log(values);
-    db.query(q, values,(err,data) =>
-        {
-            if(err) return res.json(err)
-            return res.json(data)
-        })
+    db.query(q, values, (err, data) => {
+        if(err) return res.json(err)
+        return res.json("Product has been updated!")
+    })
 });
 
 

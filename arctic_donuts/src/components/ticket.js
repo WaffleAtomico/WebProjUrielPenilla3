@@ -25,6 +25,8 @@ export default function TicketView(props)
 
     // creates a paypal order
     const createOrder = (data, actions) => {
+        // const valueToUSD  = Math.floor(props.totalValue*0.055);
+        // console.log(valueToUSD);
         return actions.order.create({
             purchase_units: [
                 {
@@ -46,22 +48,29 @@ export default function TicketView(props)
         return actions.order.capture().then(function (details) {
             const { payer } = details;
             setSuccess(true);
-            console.log(productsToBD);
-            updateProductsData(productsToBD)
+            console.log("Productos actualizados "+productsToBD);
+            updateProductsData(productsToBD);
         });
     };
-
+/*
+sb-cxuhq31113960@personal.example.com
+Q2G8^_*t
+*/
     const updateProductsData = (productsToUpdate) =>
     {
         productsToUpdate.forEach(async product => {
+            console.log("Actualizando producto " + product.id_product);
+            console.log("Cantidad comprada "+props.clickCounts[product.id_product] );
             const newAmount = (product.product_amount ) - (props.clickCounts[product.id_product]);
+            console.log("Nueva cantidad "+newAmount);
             const dataupdate = 
             {
                 product_amount: newAmount,
-                product_id: product.id_product
+                id_product: product.id_product,
             }
             try {
-                await axios.post("http://localhost:3001/updateamount", dataupdate);
+                const response = await axios.post("http://localhost:3001/updateamount", dataupdate);
+                console.log(response);
             } catch (err) {
                 console.log(err);
             }
@@ -75,7 +84,7 @@ export default function TicketView(props)
 
     useEffect(() => {
         if (success) {
-            alert("Payment successful!!");
+            // alert("Payment successful!!");
             console.log('Order successful . Your order id is--', orderID);
             props.onButtonClick(productsToBD);
         }
@@ -89,7 +98,17 @@ export default function TicketView(props)
     
     // Para al dar click, ejecutar la query y guardar en la bd el pago del usuario de que productos 
     // junto con toda la informacion relacionada
+    
 
+    /*
+sb-qn5x731123107@business.example.com
+5gJuOd6)
+
+sb-qn5x731123107@business.example.com
+5gJuOd6)
+
+
+    */
     
     return(
         <PayPalScriptProvider options={{ "client-id": CLIENT_ID }}>
