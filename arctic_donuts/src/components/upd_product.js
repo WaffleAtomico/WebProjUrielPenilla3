@@ -19,34 +19,49 @@ const [formData, setFormData] = users({
 });
 */
 
-export default function CreateProduct(props) {
+export default function UpdateProduct(props) {
 
     const navigate = useNavigate();
 
+
+
+
     const [formData, setFormData] = useState({
-        id_product: null,
-        product_name: '',
-        product_cost: '',
-        product_amount: '',
-        product_img_url: '',
+        product_name: props.product_name,
+        product_cost: props.product_cost,
+        product_amount: props.product_amount,
+        product_img_url: props.product_img_url,
     });
+
 
     const handleChange = (event) => {
         setFormData({
             ...formData,
             [event.target.name]: event.target.value
         });
+        console.log(formData);
     };
+    
 
     const handleSubmit = async (e) => {
+        console.log(formData);
         e.preventDefault();
         {/*Lo vamos a cambiar con obtener el valor de la bd */ }
         if (formData.product_name !== ''
             && formData.product_cost !== ''
             && formData.product_amount !== ''
             && formData.product_img_url !== '') {
+
+               const infoToSend = {
+                    product_name: props.product_name,
+                    product_cost: props.product_cost,
+                    product_amount: props.product_amount,
+                    product_img_url: props.product_img_url,
+                    id_product: props.id_product,
+               }
+            
             try {
-                await axios.post("http://localhost:3001/product", formData);
+                await axios.post("http://localhost:3001/update-products", infoToSend);
                 //console.log("envie la solicitud correctamente")
                 alert("Producto Añadido!!!");
                 // navigate(`/admin_storage/${props.user_mail}`);
@@ -79,6 +94,7 @@ export default function CreateProduct(props) {
                                     placeholder="Nombre"
                                     style={{ marginTop: '5px' }}
                                     onChange={handleChange} required
+                                    value={props.product_name}
                                 />
                             </p>
                             <p>
@@ -88,6 +104,7 @@ export default function CreateProduct(props) {
                                     name="product_cost"
                                     placeholder="Costo"
                                     onChange={handleChange} required
+                                    value={props.product_cost}
                                 />
                             </p>
                             <p>
@@ -98,6 +115,7 @@ export default function CreateProduct(props) {
                                     placeholder="Cantidad"
                                     style={{ marginTop: '5px' }}
                                     onChange={handleChange} required
+                                    value={props.product_amount}
                                 />
                             </p>
                             <p>
@@ -107,10 +125,11 @@ export default function CreateProduct(props) {
                                     name="product_img_url"
                                     placeholder="Imagen"
                                     onChange={handleChange} required
+                                    value={props.product_img_url}
                                 />
                             </p>
                             <p>
-                                <input className="button" type="submit" name="create" value="Agregar producto" />
+                                <input className="button" type="submit" name="create" value="Actualizar producto" />
                             </p>
                         </form>
                     </section>

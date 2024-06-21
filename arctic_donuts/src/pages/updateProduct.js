@@ -1,10 +1,12 @@
 import '../styles/addEmployees.css'; //Importar el estilo correcto
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 import React from "react";
 import axios from "axios";
 import { useNavigate, useLocation } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
-import CloseButton from 'react-bootstrap/CloseButton';
+import { Foot, Head } from "../components/headfoot";
+import Button from 'react-bootstrap/Button';
 
 
 //const productsToBD = props.products.filter(product => product.amount > 0);
@@ -19,12 +21,15 @@ const [formData, setFormData] = users({
 });
 */
 
-export default function CreateProduct(props) {
+export default function UpdateProduct() {
 
     const navigate = useNavigate();
+    const location = useLocation();
+
+    const id_product = location.pathname.split("/")[2];
 
     const [formData, setFormData] = useState({
-        id_product: null,
+        id_product: id_product,
         product_name: '',
         product_cost: '',
         product_amount: '',
@@ -50,9 +55,6 @@ export default function CreateProduct(props) {
                 //console.log("envie la solicitud correctamente")
                 alert("Producto Añadido!!!");
                 // navigate(`/admin_storage/${props.user_mail}`);
-                props.fetchAllProducts();
-                props.setVisibilty(visible => !visible);
-                props.setVisibilty();
             } catch (err) {
                 console.log(err);
             }
@@ -62,15 +64,24 @@ export default function CreateProduct(props) {
     }
     return (
         <>
+            <Head />
             <Card className="text-center mx-auto" style={{ width: '35rem', marginTop: '90px', marginBottom: '110px' }}>
 
-                <CloseButton onClick={() => props.setVisibilty()} />
-
-                <Card.Header> <h1>Añadir Producto</h1> </Card.Header>
+                <Card.Header> <h1>Actualizar Producto</h1> </Card.Header>
                 {/* <h1 id="titulo2">Iniciar sesión</h1> */}
                 <Card.Body>
-                    <section className="form-login">
+                    <section className="update-products">
                         <form onSubmit={handleSubmit}>
+                            <p>
+                                <input
+                                    className="control"
+                                    type="text"
+                                    name="id_product"
+                                    placeholder={id_product}
+                                    style={{ marginTop: '5px' }}
+                                    onChange={handleChange} required
+                                />
+                            </p>
                             <p>
                                 <input
                                     className="control"
@@ -110,7 +121,7 @@ export default function CreateProduct(props) {
                                 />
                             </p>
                             <p>
-                                <input className="button" type="submit" name="create" value="Agregar producto" />
+                                <input className="button" type="submit" name="create" value="Actualizar" />
                             </p>
                         </form>
                     </section>
@@ -118,6 +129,7 @@ export default function CreateProduct(props) {
                     </div>
                 </Card.Body>
             </Card>
+            <Foot />
         </>
     );
 }

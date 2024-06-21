@@ -22,10 +22,12 @@ export default function Cart() {
     // const [totalValues, setTotalValues] = useState({1: 0, 2: 0, 3: 0});
     const [clickCounts, setClickCounts] = useState({});
     const [totalValues, setTotalValues] = useState({});
-
+    
+/*
     const poductsName = { 1: 'Dona DIWK', 2: 'Dona Arabella', 3: 'Dona SIAS' };
     const productsPrice = { 1: 29, 2: 29, 3: 24 };
     const productsImage = { 1: 1, 2: 2, 3: 3 };
+*/
 
     const [visible, setVisibilty] = useState(false);
     const totalPrice = Object.values(totalValues).reduce((a, b) => a + b, 0);
@@ -72,18 +74,18 @@ export default function Cart() {
             .then(response => {
                 const products = response.data;
                 setProducts(products); // Asigna los datos al estado de productos aquí
-    
+
                 const clickCounts = {};
                 const totalValues = {};
-    
+
                 products.forEach((product) => {
                     clickCounts[product.id_product] = 0;
                     totalValues[product.id_product] = 0;
                 });
-    
+
                 setClickCounts(clickCounts);
                 setTotalValues(totalValues);
-                console.log(products); // Ahora puedes ver los productos aquí
+                //console.log("productos desde cart"+products); // Ahora puedes ver los productos aquí
                 console.log(clickCounts);
                 console.log(totalValues);
             })
@@ -108,26 +110,27 @@ export default function Cart() {
                 <TicketView
                     user={email}
                     products={products}
-                    // products = {[
-                    //     {
-                    //         image: productsImage[1],
-                    //         name: poductsName[1],
-                    //         amount: clickCounts[1],
-                    //         price: productsPrice[1]
-                    //     },
-                    //     {
-                    //         image: productsImage[2],
-                    //         name: poductsName[2],
-                    //         amount: clickCounts[2],
-                    //         price: productsPrice[2]
-                    //     },
-                    //     {
-                    //         image: productsImage[3],
-                    //         name: poductsName[3],
-                    //         amount: clickCounts[3],
-                    //         price: productsPrice[3]
-                    //     }
-                    // ]}
+                    {...console.log("productos desde cart"+products)}
+                    /*products={[
+                        {
+                            image: productsImage[1],
+                            name: poductsName[1],
+                            amount: clickCounts[1],
+                            price: productsPrice[1]
+                        },
+                        {
+                            image: productsImage[2],
+                            name: poductsName[2],
+                            amount: clickCounts[2],
+                            price: productsPrice[2]
+                        },
+                        {
+                            image: productsImage[3],
+                            name: poductsName[3],
+                            amount: clickCounts[3],
+                            price: productsPrice[3]
+                        }
+                    ]}*/
                     visible={visible}
                     totalValue={totalPrice}
                     onButtonClick={handleTicket}
@@ -146,7 +149,7 @@ export default function Cart() {
                     <div key={product.id_product}>
                         <Product
                             img={product.product_img_url}
-                            title={product.product_cost}
+                            title={product.product_name}
                             desc={product.product_cost}
                             cantidad={product.product_amount}
                             onIncrease={() => handleProductIncrease(product.id_product, product.product_cost)}

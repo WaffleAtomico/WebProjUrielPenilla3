@@ -5,8 +5,10 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { IoMdRefresh } from 'react-icons/io';
 import { Foot, Head } from "../components/headfoot";
 import CreateProduct from "../components/add_product";
+import UpdateProduct from '../components/upd_product';
 
 
 export default function AdminStorage() {
@@ -14,7 +16,10 @@ export default function AdminStorage() {
 
     const [products, SetProducts] = useState([]);
     const [visible, setVisibilty] = useState(false);
-    
+    const [visible2, setVisibilty2] = useState(false);
+    const [productedit, SetProductedit] = useState();
+    const productE = null;
+
     const fetchAllProducts = async () => {
         try {
             // console.log(email);
@@ -26,11 +31,11 @@ export default function AdminStorage() {
         }
     };
 
-    useEffect(() => {  
+    useEffect(() => {
         fetchAllProducts();
     }, []);
 
-    console.log(products);
+    //console.log(products);
 
     const handleDelete = async (id_product) => {
         try {
@@ -41,6 +46,13 @@ export default function AdminStorage() {
             console.log(err);
         }
     };
+
+    const handleUpdate = (product) => {
+        console.log("Product que recibimos" + product);
+        SetProductedit(product);
+        console.log("Edit lo que enviamos " + productedit);
+        setVisibilty2(visible2 => !visible2);
+    }
 
     // const handleFormCreate = () =>
     // {
@@ -57,28 +69,46 @@ export default function AdminStorage() {
                 height: '100%',
                 backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 zIndex: 999
-            }} >   
-                <div style={{visibility: visible ?  'visible' : 'hidden'}}>
+            }} >
+                <div style={{ visibility: visible ? 'visible' : 'hidden' }}>
                     <CreateProduct
-                        user_mail= {email}
-                        setVisibilty= {setVisibilty}
+                        user_mail={email}
+                        setVisibilty={setVisibilty}
                         fetchAllProducts={fetchAllProducts}
                     />
                 </div>
-            </div> }  
+            </div>}
+            {visible2 && <div style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                zIndex: 999
+            }} >
+                <div style={{ visibility: visible2 ? 'visible' : 'hidden' }}>
+                    <UpdateProduct
+                        product={productedit}
+                        user_mail={email}
+                        setVisibilty={setVisibilty2}
+                        fetchAllProducts={fetchAllProducts}
+                    />
+                </div>
+            </div>}
 
             <Head />
             <br />
 
-            <div onClick={()=>setVisibilty(visible => !visible)} style={{cursor: "pointer"}} >
+            <div onClick={() => setVisibilty(visible => !visible)} style={{ cursor: "pointer" }} >
                 <h1>
-                     <IoMdAddCircleOutline />
+                    <IoMdAddCircleOutline />
                     {/* <Button variant="info" size='lg' >Pagar</Button > */}
                 </h1>
             </div>
 
             <h1 >Productos</h1>
-            
+
             <table>
 
                 <thead align="center">
@@ -88,6 +118,7 @@ export default function AdminStorage() {
                         <th> Nombre </th>
                         <th> Costo </th>
                         <th> Cantidad </th>
+                        <th> Actualizar </th>
                         <th> Eliminar </th>
                     </tr>
                 </thead>
@@ -101,9 +132,20 @@ export default function AdminStorage() {
                             <td>{product.product_cost}</td>
                             <td>{product.product_amount}</td>
                             <td>
-                            <p className="delete" onClick={() => handleDelete(product.id_product)} >
-                                <MdOutlineDeleteOutline style={{ fontSize: '52px' }}/>
-                            </p>
+
+                                {/*<p>
+                                    <Link to={`../update_product/${product.id_product}`} style={{ color: "inherit", textDecoration: "none" }}>
+                                        <IoMdRefresh style={{ fontSize: '52px' }} />
+                                    </Link>
+                                </p>*/}
+                                <p  onClick={() => handleUpdate(product)} style={{ cursor: "pointer" }} >
+                                    Actualizar
+                                </p>
+                            </td>
+                            <td>
+                                <p className="delete" onClick={() => handleDelete(product.id_product)} >
+                                    <MdOutlineDeleteOutline style={{ fontSize: '52px' }} />
+                                </p>
                             </td>
                         </tr>
                     ))

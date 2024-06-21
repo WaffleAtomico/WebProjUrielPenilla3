@@ -238,6 +238,23 @@ app.post("/aviable-products", (req,res) => {
         })
 });
 
+app.post("/update-products", (req,res) => {
+    const q = "UPDATE `shop_product` SET `product_name`= ?,`product_cost`= ?,`product_amount`= ?,`product_img_url`= ? WHERE id_product = ?"
+    const values = [
+        req.body.product_name,
+        req.body.product_cost,
+        req.body.product_amount,
+        req.body.product_img_url,
+        req.body.id_product
+    ]
+    console.log(values);
+    db.query(q, values,(err,data) =>
+        {
+            if(err) return res.json(err)
+            return res.json(data)
+        })
+});
+
 app.post("/updateamount", (req,res) => {
     const q = "SELECT * FROM shop_product"
     const product_amount = req.params.product_amount;

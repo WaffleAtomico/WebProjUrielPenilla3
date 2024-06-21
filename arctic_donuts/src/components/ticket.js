@@ -17,6 +17,7 @@ https://episyche.com/blog/how-to-integrate-paypal-with-react-application
 
 export default function TicketView(props)
 {
+    
     // const [show, setShow] = useState(true);
     const [success, setSuccess] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
@@ -61,6 +62,9 @@ export default function TicketView(props)
         }
     },[success]);
 
+    useEffect(()=>{
+        console.log("Recibi esta informacion en el ticket"+props.products);
+    },[]);
 
     const productsToBD = props.products.filter(product => product.amount > 0);
     
