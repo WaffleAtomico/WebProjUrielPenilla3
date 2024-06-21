@@ -17,7 +17,6 @@ https://episyche.com/blog/how-to-integrate-paypal-with-react-application
 
 export default function TicketView(props)
 {
-    
     // const [show, setShow] = useState(true);
     const [success, setSuccess] = useState(false);
     const [ErrorMessage, setErrorMessage] = useState("");
@@ -63,7 +62,7 @@ export default function TicketView(props)
     },[success]);
 
     useEffect(()=>{
-        console.log("Recibi esta informacion en el ticket"+props.products);
+        console.log("Recibi esta informacion en el ticket "+props.products);
     },[]);
 
     const productsToBD = props.products.filter(product => product.amount > 0);
@@ -71,6 +70,7 @@ export default function TicketView(props)
     // Para al dar click, ejecutar la query y guardar en la bd el pago del usuario de que productos 
     // junto con toda la informacion relacionada
 
+    
     return(
         <PayPalScriptProvider options={{ "client-id": CLIENT_ID }}>
             <div className="ticket-frame">
@@ -82,6 +82,7 @@ export default function TicketView(props)
                 <div className='ticket-list'>
                     <Product_list 
                         products = {props.products}
+                        clickCounts={props.clickCounts}
                     />
                 </div>
                 <div className="d-grid gap-2">

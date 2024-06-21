@@ -14,20 +14,9 @@ import '../styles/product.css';
 import TicketView from '../components/ticket';
 
 export default function Cart() {
-
-    // const navigate  = useNavigate();
     const { email } = useParams();
-
-    // const [clickCounts, setClickCounts] = useState({1: 0, 2: 0, 3: 0});
-    // const [totalValues, setTotalValues] = useState({1: 0, 2: 0, 3: 0});
     const [clickCounts, setClickCounts] = useState({});
     const [totalValues, setTotalValues] = useState({});
-    
-/*
-    const poductsName = { 1: 'Dona DIWK', 2: 'Dona Arabella', 3: 'Dona SIAS' };
-    const productsPrice = { 1: 29, 2: 29, 3: 24 };
-    const productsImage = { 1: 1, 2: 2, 3: 3 };
-*/
 
     const [visible, setVisibilty] = useState(false);
     const totalPrice = Object.values(totalValues).reduce((a, b) => a + b, 0);
@@ -45,6 +34,8 @@ export default function Cart() {
             ...totalValues,
             [productId]: newCount * price
         });
+        console.log("Click "+clickCounts[productId] + "idProduct "+ productId);
+
     }
 
     const handleProductDecrease = (productId, price) => {
@@ -59,6 +50,7 @@ export default function Cart() {
                 [productId]: newCount * price
             });
         }
+        console.log("Click "+clickCounts[productId] + "idProduct "+ productId);
     }
 
     const handleTicket = (PtoBD) => {
@@ -85,7 +77,7 @@ export default function Cart() {
 
                 setClickCounts(clickCounts);
                 setTotalValues(totalValues);
-                //console.log("productos desde cart"+products); // Ahora puedes ver los productos aquí
+                console.log("productos desde cart: " + products); // Ahora puedes ver los productos aquí
                 console.log(clickCounts);
                 console.log(totalValues);
             })
@@ -110,7 +102,48 @@ export default function Cart() {
                 <TicketView
                     user={email}
                     products={products}
-                    {...console.log("productos desde cart"+products)}
+                    clickCounts={clickCounts}
+                    visible={visible}
+                    totalValue={totalPrice}
+                    onButtonClick={handleTicket}
+                />
+            </div>
+
+            <Link to="/" >
+                <Button variant="primary" size="lg" className="inic">
+                    <HiOutlineLogin />
+                </Button>
+            </Link>
+
+            <div className="grid-container">
+
+                {products.map((product) => ( product.product_amount > 0 && (
+                    <div key={product.id_product}>
+                        <Product
+                            // key={product.id_product}
+                            img={product.product_img_url}
+                            title={product.product_name}
+                            desc={product.product_cost}
+                            cantidad={product.product_amount}
+                            onIncrease={() => handleProductIncrease(product.id_product, product.product_cost)}
+                            onDecrease={() => handleProductDecrease(product.id_product, product.product_cost)}
+                            total={totalValues}
+                        />
+                    </div>
+                ) ) ) }
+            </div>
+            <div className="cart-price" style={{ visibility: totalPrice > 0 ? 'visible' : 'hidden' }} onClick={handleTicket} >
+                <h1>Confirmar pedido: ${totalPrice}
+                    {/* <Button variant="info" size='lg' >Pagar</Button > */}
+                </h1>
+            </div>
+            <Foot />
+        </>
+    );
+}
+
+
+// {...console.log("productos desde cart"+products)}
                     /*products={[
                         {
                             image: productsImage[1],
@@ -131,41 +164,3 @@ export default function Cart() {
                             price: productsPrice[3]
                         }
                     ]}*/
-                    visible={visible}
-                    totalValue={totalPrice}
-                    onButtonClick={handleTicket}
-                />
-            </div>
-
-            <Link to="/" >
-                <Button variant="primary" size="lg" className="inic">
-                    <HiOutlineLogin />
-                </Button>
-            </Link>
-
-            <div className="grid-container">
-
-                {products.map((product) => (
-                    <div key={product.id_product}>
-                        <Product
-                            img={product.product_img_url}
-                            title={product.product_name}
-                            desc={product.product_cost}
-                            cantidad={product.product_amount}
-                            onIncrease={() => handleProductIncrease(product.id_product, product.product_cost)}
-                            onDecrease={() => handleProductDecrease(product.id_product, product.product_cost)}
-                            total={totalValues[1]}
-                        />
-                    </div>
-                ))}
-
-            </div>
-            <div className="cart-price" style={{ visibility: totalPrice > 0 ? 'visible' : 'hidden' }} onClick={handleTicket} >
-                <h1>Confirmar pedido: ${totalPrice}
-                    {/* <Button variant="info" size='lg' >Pagar</Button > */}
-                </h1>
-            </div>
-            <Foot />
-        </>
-    );
-}
