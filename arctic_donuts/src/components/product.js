@@ -11,7 +11,7 @@ export default function Product(props){
     const [nclic, setNumClics] = useState(0);
 
     const manejarClic = () => {
-        if (nclic <props.cantidad) {
+        if (nclic < props.cantidad) {
             setNumClics(nclic+1);
             props.onIncrease();
         }        
@@ -40,7 +40,7 @@ export default function Product(props){
                         <CgMathMinus />  
                     </Button>                
                     <Badge bg="secondary" style={{fontSize: '20px'}}>{nclic}</Badge>
-                    <Button variant="success" style={{borderRadius: '50%'}} onClick={manejarClic}>
+                    <Button variant="success" style={{borderRadius: '50%', visibility: nclic < props.cantidad ? 'visible' : 'hidden'}} onClick={manejarClic}>
                         <CgMathPlus />
                     </Button> 
                     </div>
