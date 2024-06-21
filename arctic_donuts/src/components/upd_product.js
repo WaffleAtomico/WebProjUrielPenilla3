@@ -53,7 +53,6 @@ export default function UpdateProduct(props) {
                 // navigate(`/admin_storage/${props.user_mail}`);
                 props.fetchAllProducts();
                 props.setVisibilty(visible => !visible);
-                props.setVisibilty();
             } catch (err) {
                 console.log(err);
             }

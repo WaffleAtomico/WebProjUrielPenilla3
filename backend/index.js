@@ -92,6 +92,18 @@ app.put("/user", (req, res) => {
     })
 });
 
+app.post("/user-password", (req, res) => {
+    const q = "UPDATE `user` SET `user_password`= ? WHERE `user_mail` = ? "
+    const values = [
+        req.body.user_password,
+        req.body.user_mail
+    ]
+    db.query(q, values, (err, data) => {
+        if(err) return res.json(err)
+        return res.json("Password has been updated!")
+    })
+});
+
 /*
 app.put("/user", (req, res) => {
     const q = "UPDATE user SET user_password = ? WHERE user_mail = ?"
