@@ -1,12 +1,13 @@
 import '../styles/table.css'; //Importar el estilo correcto
 import { useEffect, useState } from 'react';
 import React from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+import { HiOutlineLogin } from "react-icons/hi";import { Link, useParams } from "react-router-dom";
 import { MdOutlineDeleteOutline } from "react-icons/md";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoMdRefresh } from 'react-icons/io';
-import { Foot, Head } from "../components/headfoot";
+import { Foot, Head, Head_Navbar } from "../components/headfoot";
 import CreateProduct from "../components/add_product";
 import UpdateProduct from '../components/upd_product';
 
@@ -51,7 +52,7 @@ export default function AdminStorage() {
         console.log("Product que recibimos" + product);
         SetProductedit(product);
         console.log("Edit lo que enviamos " + productedit);
-        setVisibilty2(visible2 => !visible2); 
+        setVisibilty2(visible2 => !visible2);
     }
 
     // const handleFormCreate = () =>
@@ -97,7 +98,18 @@ export default function AdminStorage() {
             </div>}
 
             <Head />
+            <div className="navbar">
+                <header className="head-nav">
+                    <Link className="link" to={`/admin_employees/${email}`} > Administracion de Empleados </Link>
+                </header>
+            </div>
             <br />
+
+            <Link to="/" >
+                <Button variant="primary" size="lg" className="inic">
+                    <HiOutlineLogin />
+                </Button>
+            </Link>
 
             <div onClick={() => setVisibilty(visible => !visible)} style={{ cursor: "pointer" }} >
                 <h1>
@@ -131,13 +143,13 @@ export default function AdminStorage() {
                             <td>{product.product_cost}</td>
                             <td>{product.product_amount}</td>
                             <td>
-                                <p  onClick={() => handleUpdate(product)} style={{ cursor: "pointer" }} >
-                                    Actualizar
+                                <p onClick={() => handleUpdate(product)} style={{ cursor: "pointer" }} >
+                                    <IoMdRefresh style={{ fontSize: '40px' }} />
                                 </p>
                             </td>
                             <td>
                                 <p className="delete" onClick={() => handleDelete(product.id_product)} >
-                                    <MdOutlineDeleteOutline style={{ fontSize: '52px' }} />
+                                    <MdOutlineDeleteOutline style={{ fontSize: '40px' }} />
                                 </p>
                             </td>
                         </tr>

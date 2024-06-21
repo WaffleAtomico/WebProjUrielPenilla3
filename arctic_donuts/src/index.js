@@ -11,7 +11,6 @@ import App from './App';
 import Createacc from './pages/createacc';
 import Login from './pages/login';
 import Cart from './pages/cart';
-import UpdateProduct from './pages/updateProduct';
 // import Insert_user from './components/insert_user';
 
 import { Errorurl } from './components/errorurl';
@@ -56,10 +55,6 @@ const router = createBrowserRouter([
   {
     path: '/admin_employees/:email',
     element: <Admin_employees />,
-  },
-  {
-    path: '/update_product/:id_product',
-    element: <UpdateProduct />,
   },
   {
     path: '/admin_storage/:email',

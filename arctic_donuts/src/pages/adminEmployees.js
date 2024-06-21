@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import AddEmployees from '../components/add_employee';
 import { Foot, Head } from "../components/headfoot";
 import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import '../styles/table.css';
+import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+import { HiOutlineLogin } from "react-icons/hi";import '../styles/table.css';
 import { IoIosPersonAdd } from "react-icons/io";
 import { FaUserAltSlash } from "react-icons/fa";
 
@@ -74,6 +75,18 @@ export default function Admin_Employees(props) {
                 </div>
             </div>}
             <Head />
+
+            <div className="navbar">
+                <header className="head-nav">
+                    <Link className="link" to={`/admin_storage/${email}`} > Administracion de Productos </Link>
+                </header>
+            </div>
+
+            <Link to="/" >
+                <Button variant="primary" size="lg" className="inic">
+                    <HiOutlineLogin />
+                </Button>
+            </Link>
 
             <div onClick={handleFormCreate} style={{ cursor: "pointer" }} >
                 <h1>

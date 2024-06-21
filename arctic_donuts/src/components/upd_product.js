@@ -49,7 +49,7 @@ export default function UpdateProduct(props) {
             try {
                 await axios.post("http://localhost:3001/update-products", infoToSend);
                 //console.log("envie la solicitud correctamente")
-                alert("Producto Añadido!!!");
+                alert("Producto Actualizado!!!");
                 // navigate(`/admin_storage/${props.user_mail}`);
                 props.fetchAllProducts();
                 props.setVisibilty(visible => !visible);

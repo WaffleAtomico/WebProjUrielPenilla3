@@ -21,3 +21,18 @@ img{
     height: auto;
     
 }
+
+.head-nav{
+    background-color: #006300;
+    padding: 1rem 1rem;
+    width: 100%;
+    color: #FFF;
+    text-align: center;
+}
+
+.link{
+    color: #FFF;
+    text-align: center;
+    font-size: 18px;
+    text-decoration: none;
+}
